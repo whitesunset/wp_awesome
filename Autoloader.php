@@ -28,7 +28,7 @@ class Awesome_Autoloader{
             $class_path = substr($class, 0, strlen($class) - strlen($class_name));
 
             // remove namespace from Class name and replace some predefined constants
-            $class_path = str_replace('LA_' . $plugin['label'], '', $class_path);
+            $class_path = str_replace('LA_' . str_replace(' ', '_', $plugin['label']), '', $class_path);
             $class_path = str_replace($plugin['namespace'], '', $class_path);
             $class_path = str_replace('App', 'includes', $class_path);
             $class_path = str_replace('Back', 'admin', $class_path);
