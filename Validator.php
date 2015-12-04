@@ -17,7 +17,7 @@ class Validator {
      */
     protected function fill_messages(){
         $this->messages = array(
-            'required' => __('%1$s %2$s is required.')
+            'required' => __('%1$s is required.')
         );
     }
 
@@ -25,12 +25,13 @@ class Validator {
      * Validation method for all routes
      *
      * @param array $request
-     * @internal param $action
+     * @param array $rules
      * @return array
+     * @internal param $action
      */
-    public function validate($request){
+    public function validate($request, $rules = array()){
         $model = $this->model;
-        $rules = $model::$validation_rules;
+        $rules = $rules ?: $model::$validation_rules;
         $errors = new \WP_Error();
 
         foreach($request as $key => $value){
@@ -40,7 +41,7 @@ class Validator {
 
                 /* Check if filed required (must not be empty) */
                 if($rule == 'required' && empty($field)){
-                    $message = sprintf($this->messages[$rule], $model::getLabel('singular_name'), ucfirst($key));
+                    $message = sprintf($this->messages[$rule], str_replace('_', ' ', ucfirst($key)));
                     $errors->add($key, $message);
                 }
             }

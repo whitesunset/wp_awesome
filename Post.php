@@ -1,7 +1,7 @@
 <?php
 namespace Awesome;
 
-abstract class Post {
+class Post {
     /**
      * Clear singular name for model
      *
@@ -87,6 +87,7 @@ abstract class Post {
         }
         if(isset($args['post'])){
             $this->post = $args['post'];
+            $this->id = $this->post->ID;
             return $this;
         }
     }
@@ -208,7 +209,7 @@ abstract class Post {
                 return $query->post;
             }
         }else{
-            $error = new WP_Error();
+            $error = new \WP_Error();
             $error->add('0', 'ID is not defined');
             return $error;
         }
@@ -245,17 +246,6 @@ abstract class Post {
     }
 
     /**
-     * Check if array is associative
-     *
-     * @param array $array
-     * @return bool
-     */
-    public static function is_assoc(array $array){
-        $result = count(array_filter(array_keys($array), 'is_string'));
-        return (bool) $result;
-    }
-
-    /**
      * Set default values for model before save
      *
      * @param $input
@@ -265,7 +255,7 @@ abstract class Post {
     public function set_defaults($input, $defaults){
         $result = array();
         foreach($defaults as $key => $value){
-            if(gettype($value) == 'array' && static::is_assoc($value) && isset($input[$key])){
+            if(gettype($value) == 'array' && ArrayUtil::is_assoc($value) && isset($input[$key])){
                 $result[$key] = $this->set_defaults($input[$key], $value);
             }else{
                 $result[$key] = isset($input[$key]) && $input[$key] !== '' ? $input[$key] : $defaults[$key];
@@ -284,7 +274,7 @@ abstract class Post {
         $data = array(
             'ID' => $this->id,
             'post_type' => static::$post_type,
-            'post_status' => 'publish',
+            'post_status' => $input['post_status'] ?: 'publish',
             'post_title' => $input[static::$model_name . '_name'],
         );
         return $data;
@@ -322,7 +312,7 @@ abstract class Post {
                 continue;
             }
             $field = $input[$key];
-            if(gettype($value) == 'array' && static::is_assoc($field)){
+            if(gettype($value) == 'array' && ArrayUtil::is_assoc($field)){
                 $data[$key] = $this->assign_custom_fields($value, $field);
             }else{
                 $data[$key] = $field;
@@ -383,6 +373,14 @@ abstract class Post {
      */
     public function delete($force_delete = true){
         wp_delete_post($this->id, $force_delete);
+    }
+
+    /**
+     * Publish model by id
+     *
+     */
+    public function publish(){
+        wp_publish_post($this->id);
     }
 
     // Link & unlink one model to another
