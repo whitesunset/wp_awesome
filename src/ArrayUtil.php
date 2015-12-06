@@ -1,5 +1,5 @@
 <?php
-namespace Awesome;
+namespace LooksAwesome\Common;
 
 class ArrayUtil{
     /**

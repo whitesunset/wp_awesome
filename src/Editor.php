@@ -1,5 +1,6 @@
 <?php
-namespace Awesome;
+
+namespace LooksAwesome\Common;
 
 class Editor {
     private static $mce_settings = null;

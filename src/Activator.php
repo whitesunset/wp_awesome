@@ -1,5 +1,8 @@
 <?php
-class Awesome_Activator{
+
+namespace LooksAwesome\Common;
+
+class Activator{
     protected static $args;
 
     public function __construct($args){

@@ -1,5 +1,6 @@
 <?php
-namespace Awesome;
+
+namespace LooksAwesome\Common;
 
 class Validator {
     /* array of validation messages */

@@ -1,5 +1,6 @@
 <?php
-namespace Awesome;
+
+namespace LooksAwesome\Common;
 
 class Response {
     public static function get(\WP_Ajax_Response $response, $data, $type){
