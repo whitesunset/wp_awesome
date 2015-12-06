@@ -3,7 +3,6 @@
 
 **Activator**: activate plugin  
 **ArrayUtil**:	useful methods for Array manipulation (find value by key, find value by index, get keys from multidimensional array)  
-**Autoloader**:	PHP class autoloader  
 **Editor**:	include WP built-in rich text editor  
 **FieldsFactory**: create custom HTML fields fastly  
 **Post**:	CRUD wrapper for WP_Post manipulation  
