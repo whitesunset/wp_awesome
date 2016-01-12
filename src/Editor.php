@@ -19,14 +19,13 @@ class Editor {
             'media_buttons' => true,
             'wpautop' => false
         ) );
-        $mce_init = self::get_mce_init($data['id']);
-        $qt_init = self::get_qt_init($data['id']); ?>
+        $mce_init = self::get_mce_init($data['id'] . $data['stamp']);
+        $qt_init = self::get_qt_init($data['id'] . $data['stamp']); ?>
         <script type="text/javascript">
             tinyMCEPreInit.mceInit = jQuery.extend( tinyMCEPreInit.mceInit, <?php echo $mce_init ?>);
             tinyMCEPreInit.qtInit = jQuery.extend( tinyMCEPreInit.qtInit, <?php echo $qt_init ?>);
         </script>
         <?php
-        //die();
     }
 
     /**
