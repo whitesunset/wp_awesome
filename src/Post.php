@@ -275,7 +275,7 @@ class Post {
         $data = array(
             'ID' => $this->id,
             'post_type' => static::$post_type,
-            'post_status' => $input['post_status'] ?: 'publish',
+            'post_status' => array_key_exists('post_status', $input) ? $input['post_status'] : 'publish',
             'post_title' => $input[static::$model_name . '_name'],
         );
         return $data;

@@ -32,7 +32,7 @@ class Validator {
      */
     public function validate($request, $rules = array()){
         $model = $this->model;
-        $rules = $rules ?: $model::$validation_rules;
+        $rules = null !== $rules ? $rules: $model::$validation_rules;
         $errors = new \WP_Error();
 
         foreach($request as $key => $value){
