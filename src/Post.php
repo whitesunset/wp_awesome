@@ -228,6 +228,7 @@ class Post {
         if($query->have_posts()){
             return $query->posts;
         }
+        return array();
     }
 
     /**
