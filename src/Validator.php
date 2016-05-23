@@ -6,10 +6,12 @@ class Validator {
     /* array of validation messages */
     protected $messages;
     protected $model;
+    protected $textdomain;
 
-    public function __construct($model = '', $namespace = '\\'){
+    public function __construct($model = '', $namespace = '\\', $textdomain = ''){
         $model = $namespace . '\App\Model\\' .ucfirst($model);
         $this->model = $model;
+        $this->textdomain = $textdomain;
         $this->fill_messages();
     }
 
@@ -18,7 +20,7 @@ class Validator {
      */
     protected function fill_messages(){
         $this->messages = array(
-            'required' => __('%1$s is required.')
+            'required' => __('%1$s is required.', $this->textdomain)
         );
     }
 
@@ -42,11 +44,12 @@ class Validator {
 
                 /* Check if filed required (must not be empty) */
                 if($rule == 'required' && empty($field)){
-                    $message = sprintf($this->messages[$rule], str_replace('_', ' ', ucfirst($key)));
+                    $field = str_replace('_', ' ', ucfirst($key));
+                    $message = sprintf($this->messages[$rule], __($field, $this->textdomain));
                     $errors->add($key, $message);
                 }
             }
         }
         return $errors;
     }
-} 
+}
